@@ -1,4 +1,5 @@
 import cv2
+import sys, time, os
 
 ASCII_CHARACTERS = ".,-~:;=!*#$@"[::-1]
 
@@ -32,8 +33,16 @@ def get_ascii_frames(video_file_path):
 
     return frames
 
+def draw_frames_in_terminal(video_file_path):
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+    for frame in get_ascii_frames(video_file_path):
+        sys.stdout.write('\x1b[H' + frame)  # draw frame
+        sys.stdout.flush()
+        time.sleep(1 / 24)  # 24 FPS
+
 def main():
-    print("hello world")
+    draw_frames_in_terminal("Coffee Cup Donut.mp4")
 
 if __name__ == "__main__":
     main()
